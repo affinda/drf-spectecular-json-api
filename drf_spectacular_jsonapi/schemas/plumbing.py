@@ -54,5 +54,4 @@ def build_json_api_data_frame(schema):
         "properties": {
             "data": schema
         },
-        "required": ["data"]
     }
