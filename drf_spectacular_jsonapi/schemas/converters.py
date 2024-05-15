@@ -200,8 +200,8 @@ class JsonApiResourceObject:
                     required_relationships.append(format_field_name(field.field_name))
                 continue
 
-            if field.required:
-                required_attributes.append(format_field_name(field.field_name))
+            # Hack? Forcing all attributes to be required.
+            required_attributes.append(format_field_name(field.field_name))
 
             attributes[format_field_name(
                 field.field_name)] = self.drf_spectacular_schema["properties"][field.field_name]
@@ -211,8 +211,8 @@ class JsonApiResourceObject:
                 "type": "object",
                 "properties": attributes,
             }
-            # if required_attributes:
-            self._schema["properties"]["attributes"]["required"] = attributes
+            if required_attributes:
+                self._schema["properties"]["attributes"]["required"] = required_attributes
 
         if relationships:
             self._schema["properties"]["relationships"] = {
