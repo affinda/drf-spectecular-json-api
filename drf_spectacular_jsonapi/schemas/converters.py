@@ -211,16 +211,14 @@ class JsonApiResourceObject:
                 "type": "object",
                 "properties": attributes,
             }
-            if required_attributes:
-                self._schema["properties"]["attributes"]["required"] = required_attributes
+            self._schema["properties"]["attributes"]["required"] = required_attributes
 
         if relationships:
             self._schema["properties"]["relationships"] = {
                 "type": "object",
                 "properties": relationships,
             }
-            if required_relationships:
-                self._schema["properties"]["relationships"]["required"] = required_relationships
+            self._schema["properties"]["relationships"]["required"] = required_relationships
 
     def __dict__(self) -> Dict:
         return self._schema
