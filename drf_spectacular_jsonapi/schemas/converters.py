@@ -211,8 +211,8 @@ class JsonApiResourceObject:
                 "type": "object",
                 "properties": attributes,
             }
-            if required_attributes:
-                self._schema["properties"]["attributes"]["required"] = required_attributes
+            # if required_attributes:
+            self._schema["properties"]["attributes"]["required"] = attributes
 
         if relationships:
             self._schema["properties"]["relationships"] = {
