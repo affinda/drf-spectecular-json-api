@@ -194,10 +194,20 @@ class JsonApiResourceObject:
                 continue
 
             if isinstance(field, RelatedField) or isinstance(field, ManyRelatedField):
-                relationships[format_field_name(
-                    field.field_name)] = self.get_related_field_converter_class()(field=field, drf_spectactular_field_schema=self.drf_spectacular_schema["properties"][field.field_name]).__dict__()
+                field_dict = self.get_related_field_converter_class()(field=field, drf_spectactular_field_schema=self.drf_spectacular_schema["properties"][field.field_name]).__dict__()
+                formatted_name = format_field_name(field.field_name)
+
                 if field.required:
-                    required_relationships.append(format_field_name(field.field_name))
+                    required_relationships.append(formatted_name)
+
+                if "nullable" in field_dict:
+                    field_dict.pop("nullable")
+
+                if field.allow_null:
+                    field_dict["properties"]["data"]["nullable"] = True
+
+                relationships[formatted_name] = field_dict
+
                 continue
 
             if field.required:
